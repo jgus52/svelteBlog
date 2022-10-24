@@ -1,0 +1,10 @@
+.git
+node_modules
+.eslint*
+.prettier*
+.git*
+.vscode
+Dockerfile*
+public
+.svelte-kit
+build
