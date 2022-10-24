@@ -3,7 +3,7 @@
 	import { onMount, afterUpdate } from 'svelte';
 	import { post, getContent } from './+page.js';
 	import { goto } from '$app/navigation';
-	import { host, imgPrefix } from 'src/routes/static';
+	import { host, imgPrefix } from '../../static';
 
 	/** @type {import('./$types').PageData} */
 	export let data;

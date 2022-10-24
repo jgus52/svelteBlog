@@ -1,6 +1,6 @@
 import { writable, derived } from 'svelte/store';
 import { error } from '@sveltejs/kit';
-import { host } from 'src/routes/static';
+import { host } from '../../static';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch, parent }) {
