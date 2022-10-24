@@ -3,6 +3,7 @@
 	import { onMount, afterUpdate } from 'svelte';
 	import { post, getContent } from './+page.js';
 	import { goto } from '$app/navigation';
+	import { host, imgPrefix } from 'src/routes/static';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -20,7 +21,7 @@
 
 	const update = async () => {
 		await self
-			.fetch(`https://www.jjjgus.site/be/editPost`, {
+			.fetch(`${host}/be/editPost`, {
 				method: 'POST',
 				headers: {
 					Authorization: `Bearer ${data.token}`,
@@ -29,7 +30,7 @@
 				body: JSON.stringify({ id: data.id, content: contents })
 			})
 			.then(() => {
-				goto(`${data.host}/post/${data.id}`);
+				goto(`${host}/post/${data.id}`);
 			})
 			.catch((e) => {
 				return null;
@@ -41,7 +42,7 @@
 	<div class="addPostBox">
 		<p class="title">{today.toLocaleDateString()}</p>
 		{#each contents as content}
-			{#if content.startsWith('https://jgblog-image.s3')}
+			{#if content.startsWith(imgPrefix)}
 				<img src={content} class="image" alt={content} />
 			{:else}
 				<textarea

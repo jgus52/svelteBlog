@@ -1,11 +1,12 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { host } from '../static';
 	/** @type {import('./$types').ActionData} */
 	export let form;
 
 	onMount(async () => {
-		if (form?.success) goto(`https://www.jjjgus.site`);
+		if (form?.success) goto(`${host}`);
 	});
 </script>
 

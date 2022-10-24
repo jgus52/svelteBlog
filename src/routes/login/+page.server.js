@@ -1,5 +1,6 @@
 import { goto } from '$app/navigation';
 import { redirect } from '@sveltejs/kit';
+import { host } from '../static';
 
 /** @type {import('./$types').Actions} */
 export const actions = {
@@ -10,7 +11,7 @@ export const actions = {
 		const id = data.get('id');
 		const pwd = data.get('password');
 
-		const response = await fetch(`https://www.jjjgus.site/be/auth`, {
+		const response = await fetch(`${host}/be/auth`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

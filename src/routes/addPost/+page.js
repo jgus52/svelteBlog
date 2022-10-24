@@ -1,6 +1,6 @@
 /** @type {import('./$types').PageLoad} */
 export async function load({ parent }) {
-	const { token, host } = await parent();
+	const { token } = await parent();
 
-	return { token, host };
+	return { token };
 }

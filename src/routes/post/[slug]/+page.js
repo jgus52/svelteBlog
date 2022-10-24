@@ -1,11 +1,10 @@
 import { writable, derived } from 'svelte/store';
 import { error, redirect } from '@sveltejs/kit';
-import { page } from '$app/stores';
-import { afterNavigate, goto } from '$app/navigation';
+import { host } from '../../static.js';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch, url }) {
-	const response = await fetch(`https://www.jjjgus.site/be/post?id=${params.slug}`);
+	const response = await fetch(`${host}/be/post?id=${params.slug}`);
 	let data = null;
 	try {
 		data = await response.json();

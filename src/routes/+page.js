@@ -1,10 +1,11 @@
 import { writable, derived } from 'svelte/store';
+import { host } from './static';
 
 export const post = writable();
 
 /** @type {import('./$types').PageLoad} */
-export async function load({ params, fetch, url }) {
-	const response = await fetch(`https://www.jjjgus.site/be/post`);
+export async function load({ params, fetch }) {
+	const response = await fetch(`${host}/be/post`);
 	let data = null;
 	try {
 		data = await response.json();

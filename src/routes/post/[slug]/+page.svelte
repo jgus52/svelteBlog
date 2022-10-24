@@ -5,6 +5,7 @@
 	import { post, getContent } from './+page.js';
 	import { afterNavigate, goto } from '$app/navigation';
 	import { base } from '$app/paths';
+	import { imgPrefix, instagramLink } from '../../static.js';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -17,18 +18,7 @@
 			goto(previousPage);
 		}
 	});
-	onMount(async () => {
-		// post.set(data);
-		// date = new Date(data.createdAt);
-	});
-	// const apiData = async () => {
-	// 	let response = await fetch('http://localhost:8080/post', {
-	// 		body: JSON.stringify({ id: data.id })
-	// 	});
-	// 	var ret = await response.json();
-	// 	post.set(ret);
-	// 	return ret;
-	// };
+	onMount(async () => {});
 </script>
 
 <main>
@@ -36,7 +26,7 @@
 		<div class="profile">
 			<img src={pic} class="image" alt="profile" />
 			<p>Jgus</p>
-			<a href="https://www.instagram.com/jgus_52/">instagram</a>
+			<a href={instagramLink}>instagram</a>
 		</div>
 		<div class="post">
 			<div style="width: 100%; display: flex; justify-content: space-between">
@@ -44,13 +34,13 @@
 				<a
 					rel="external"
 					style="text-decoration: none"
-					href="{data.host}/editPost/{data.id}"
+					href="/editPost/{data.id}"
 					class="imageInputLabel">edit</a
 				>
 			</div>
 
 			{#each $getContent as content}
-				{#if content.startsWith('https://jgblog-image.s3')}
+				{#if content.startsWith(imgPrefix)}
 					<img src={content} class="image" alt={content} />
 				{:else}
 					<p class="content">{content}</p>
@@ -63,11 +53,7 @@
 					class="imageInputLabel">prev</a
 				>
 				<!-- <a style="text-decoration: none" href="/post/{data.id - 1}" class="imageInputLabel">next</a> -->
-				<a
-					style="text-decoration: none"
-					href="{data.host}/post/{data.id - 1}"
-					class="imageInputLabel">next</a
-				>
+				<a style="text-decoration: none" href="/post/{data.id - 1}" class="imageInputLabel">next</a>
 			</div>
 		</div>
 	</section>

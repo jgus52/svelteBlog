@@ -3,6 +3,7 @@
 	import pic from './pic.jpg';
 	import { onMount } from 'svelte';
 	import { post, getContent, getId } from './+page.js';
+	import { imgPrefix, instagramLink } from './static';
 
 	onMount(async () => {});
 	/** @type {import('./$types').PageData} */
@@ -14,7 +15,7 @@
 		<div class="profile">
 			<img src={pic} class="image" alt="profile" />
 			<p>Jgus</p>
-			<a href="https://www.instagram.com/jgus_52/">instagram</a>
+			<a href={instagramLink}>instagram</a>
 		</div>
 		<div class="post">
 			<div style="width: 100%; display: flex; justify-content: space-between">
@@ -22,12 +23,12 @@
 				<a
 					rel="external"
 					style="text-decoration: none"
-					href="{data.host}/editPost/{$getId}"
+					href="/editPost/{$getId}"
 					class="imageInputLabel">edit</a
 				>
 			</div>
 			{#each $getContent as content}
-				{#if content.startsWith('https://jgblog-image.s3')}
+				{#if content.startsWith(imgPrefix)}
 					<img src={content} class="image" alt={content} />
 				{:else}
 					<p class="content">{content}</p>
@@ -40,10 +41,7 @@
 						href="/post/{data.id + 1}"
 						class="imageInputLabel">prev</a
 					>
-					<a
-						style="text-decoration: none"
-						href="{data.host}/post/{$getId - 1}"
-						class="imageInputLabel">next</a
+					<a style="text-decoration: none" href="/post/{$getId - 1}" class="imageInputLabel">next</a
 					>
 				</div>
 			{/if}

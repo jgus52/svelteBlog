@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import '../../app.css';
+	import { host } from '../static';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
@@ -31,7 +32,7 @@
 			contents = [...contents, textVal];
 		}
 
-		await fetch(`https://www.jjjgus.site/be/post`, {
+		await fetch(`${host}/be/post`, {
 			method: 'POST',
 			headers: {
 				Authorization: `Bearer ${data.token}`,
@@ -41,7 +42,7 @@
 		})
 			.then((response) => response.json())
 			.then((data) => {
-				goto(`${data.host}/post`);
+				goto(`${host}/post`);
 			})
 			.catch((e) => {
 				return null;
