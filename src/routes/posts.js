@@ -5,7 +5,7 @@ export const posts = writable([]);
 
 export const updatePosts = derived(posts, async ($posts) => {
 	if ($posts.length == 0) {
-		console.log('fetch');
+		console.log('update');
 		const response = await fetch(`${host}/be/posts`);
 		let data = await response.json();
 		data.forEach((element) => {

@@ -1,12 +1,13 @@
 <script>
+	import { onMount } from 'svelte';
 	import '../app.css';
 	import pic from './pic.jpg';
 	import { posts, updatePosts } from './posts.js';
 	import { imgPrefix, instagramLink } from './static';
 
-	$updatePosts;
 	let idx = 0;
 	let post = $posts ? $posts[idx] : null;
+	$updatePosts.then(() => (post = $posts[idx]));
 </script>
 
 <main>
@@ -22,17 +23,17 @@
 				<a
 					rel="external"
 					style="text-decoration: none"
-					href="/editPost/{post?.id}"
+					href="/editPost/{idx}"
 					class="imageInputLabel">edit</a
 				>
 			</div>
-			{#each post?.content as content}
-				{#if content.startsWith(imgPrefix)}
-					<img src={content} class="image" alt={content} />
-				{:else}
-					<p class="content">{content}</p>
-				{/if}
-			{/each}
+			{#if post}{#each post.content as content}
+					{#if content.startsWith(imgPrefix)}
+						<img src={content} class="image" alt={content} />
+					{:else}
+						<p class="content">{content}</p>
+					{/if}
+				{/each}{/if}
 			<div style="width: 100%; display: flex; justify-content: space-between">
 				<a style="visibility: hidden" href="/post/{idx + 1}" class="imageInputLabel">next</a>
 				<a style="text-decoration: none" href="/post/{idx + 1}" class="imageInputLabel">next</a>

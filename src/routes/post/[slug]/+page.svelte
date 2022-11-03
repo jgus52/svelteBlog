@@ -7,8 +7,8 @@
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	$updatePosts;
 	let post = $posts ? $posts[data.idx] : null;
+	$updatePosts.then(() => (post = $posts[data.idx]));
 </script>
 
 <main>
@@ -29,13 +29,13 @@
 				>
 			</div>
 
-			{#each post?.content as content}
-				{#if content.startsWith(imgPrefix)}
-					<img src={content} class="image" alt={content} />
-				{:else}
-					<p class="content">{content}</p>
-				{/if}
-			{/each}
+			{#if post}{#each post?.content as content}
+					{#if content.startsWith(imgPrefix)}
+						<img src={content} class="image" alt={content} />
+					{:else}
+						<p class="content">{content}</p>
+					{/if}
+				{/each}{/if}
 			<div style="width: 100%; display: flex; justify-content: space-between">
 				<a
 					style="visibility: {data.idx == 0
