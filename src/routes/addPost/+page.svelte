@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import '../../app.css';
+	import { updatePosts, addNewPost } from '../posts';
 	import { host } from '../static';
 
 	/** @type {import('./$types').PageData} */
@@ -42,6 +43,7 @@
 		})
 			.then((response) => response.json())
 			.then((data) => {
+				$addNewPost;
 				goto(`${host}/post`);
 			})
 			.catch((e) => {

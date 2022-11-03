@@ -1,23 +1,14 @@
 <script>
 	import '../../../app.css';
-	import { onMount, afterUpdate } from 'svelte';
-	import { post, getContent } from './+page.js';
 	import { goto } from '$app/navigation';
 	import { host, imgPrefix } from '../../static';
+	import { posts } from '../../posts';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	const today = new Date();
-	let contents = [];
-	let imageInput;
-	let textVal;
-
-	onMount(async () => {
-		contents = $getContent;
-	});
-
-	afterUpdate(async () => {});
+	let post = $posts ? $posts[data?.idx] : null;
+	let contents = post?.content;
 
 	const update = async () => {
 		await self
@@ -27,10 +18,10 @@
 					Authorization: `Bearer ${data.token}`,
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ id: data.id, content: contents })
+				body: JSON.stringify({ id: post.id, content: contents })
 			})
 			.then(() => {
-				goto(`${host}/post/${data.id}`);
+				goto(`${host}/post/${data.idx}`);
 			})
 			.catch((e) => {
 				return null;
@@ -40,7 +31,7 @@
 
 <main>
 	<div class="addPostBox">
-		<p class="title">{today.toLocaleDateString()}</p>
+		<p class="title">{post.date}</p>
 		{#each contents as content}
 			{#if content.startsWith(imgPrefix)}
 				<img src={content} class="image" alt={content} />
@@ -54,14 +45,7 @@
 				/>
 			{/if}
 		{/each}
-		<input
-			type="file"
-			class="imageInput"
-			id="imageInput"
-			alt="image"
-			accept="image/*"
-			bind:this={imageInput}
-		/>
+
 		<button class="imageInputLabel" on:click={update}>Update</button>
 	</div>
 </main>

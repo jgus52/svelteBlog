@@ -1,3 +1,4 @@
-export async function load({ fetch, cookies }) {
-	return { token: cookies.get('token') };
+/** @type {import('./$types').LayoutServerLoad} */
+export async function load(d) {
+	return { token: d.cookies.get('token') };
 }

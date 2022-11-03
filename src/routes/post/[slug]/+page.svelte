@@ -1,24 +1,14 @@
 <script>
 	import '../../../app.css';
 	import pic from '../../pic.jpg';
-	import { onMount, afterUpdate } from 'svelte';
-	import { post, getContent } from './+page.js';
-	import { afterNavigate, goto } from '$app/navigation';
-	import { base } from '$app/paths';
+	import { posts, updatePosts } from '../../posts';
 	import { imgPrefix, instagramLink } from '../../static.js';
 
 	/** @type {import('./$types').PageData} */
 	export let data;
 
-	let previousPage = base;
-
-	afterNavigate(({ from }) => {
-		previousPage = from?.url.pathname || previousPage;
-		if (data.id == null) {
-			goto(previousPage);
-		}
-	});
-	onMount(async () => {});
+	$updatePosts;
+	let post = $posts ? $posts[data.idx] : null;
 </script>
 
 <main>
@@ -30,16 +20,16 @@
 		</div>
 		<div class="post">
 			<div style="width: 100%; display: flex; justify-content: space-between">
-				<p class="title">{data?.date}</p>
+				<p class="title">{post?.date}</p>
 				<a
 					rel="external"
 					style="text-decoration: none"
-					href="/editPost/{data.id}"
+					href="/editPost/{data.idx}"
 					class="imageInputLabel">edit</a
 				>
 			</div>
 
-			{#each $getContent as content}
+			{#each post?.content as content}
 				{#if content.startsWith(imgPrefix)}
 					<img src={content} class="image" alt={content} />
 				{:else}
@@ -48,12 +38,20 @@
 			{/each}
 			<div style="width: 100%; display: flex; justify-content: space-between">
 				<a
-					style="text-decoration: none; margin: 20px 50px 20px 0px;"
-					href="/post/{data.id + 1}"
+					style="visibility: {data.idx == 0
+						? 'hidden'
+						: 'visible'}; text-decoration: none; margin: 20px 50px 20px 0px;"
+					href="/post/{data.idx - 1}"
 					class="imageInputLabel">prev</a
 				>
 				<!-- <a style="text-decoration: none" href="/post/{data.id - 1}" class="imageInputLabel">next</a> -->
-				<a style="text-decoration: none" href="/post/{data.id - 1}" class="imageInputLabel">next</a>
+				<a
+					style="visibility: {data.idx + 1 == $posts?.length
+						? 'hidden'
+						: 'visible'}; text-decoration: none"
+					href="/post/{data.idx + 1}"
+					class="imageInputLabel">next</a
+				>
 			</div>
 		</div>
 	</section>
